@@ -35,7 +35,7 @@ class App {
       this.app.use("/api/subir", ApiSubirRoutes);
       this.app.use("/", ProdRoutes);
 
-      this.app.use("/static", express.static(path.resolve(__dirname, "/public")));
+      this.app.use(express.static('public'));
       this.app.use("/uploads", express.static(path.resolve(__dirname, "/uploads")));
       this.app.set("views", "public");
       this.app.set("view engine", "hbs");
