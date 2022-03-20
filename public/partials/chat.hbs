@@ -1,0 +1,30 @@
+<hr>        
+<div class="container mx-5">
+    <h4>Hacenos tus Consultas por Chat</h4>
+    <p id="msg"></p>
+        <div class="row align-items-center">
+            <div class="col-1">
+                <label for="usuario" class="form-label">Nombre: </label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" id="usuario" placeholder="Nombre">
+            </div>
+            <div class="col-1">
+                <label for="mail" class="form-label">Mail</label>
+            </div>
+            <div class="col">
+                <input type="email" class="form-control" id="mail" placeholder="E-Mail">
+            </div>
+            <div class="col-1">
+                <label for="texto" class="form-label">Mensaje: </label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" id="mensaje" placeholder="Mensaje">
+            </div>
+            <div class="col">
+                <button class="btn btn-success m-3" onclick="enviar()"><i class="bi bi-send"></i> Enviar</button>
+            </div>
+        </div>
+    <h5 class="m-3">Mensajes</h5>
+    <div class="m-3" id="msgs"></div>
+</div>
