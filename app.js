@@ -71,6 +71,24 @@ class App {
                this.io.sockets.emit('envioProds', prods);
             });
          })
+
+         socket.on('eliminarProd', (data) =>{
+            const productos = new Productos(`productos.json`);
+            productos.deleteById(data.id, () => {
+               productos.getAll( prods => {
+                  this.io.sockets.emit('envioProds', prods);
+               });
+            })
+         })
+
+         socket.on('modificarProd', (data) =>{
+            const productos = new Productos(`productos.json`);
+            productos.modi(data, () => {
+               productos.getAll( prods => {
+                  this.io.sockets.emit('envioProds', prods);
+               });
+            })
+         })
      
          socket.on('mensajeFront', (data) =>{
              this.mensajes.push({

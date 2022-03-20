@@ -18,7 +18,6 @@ socket.on('mensajeBack', (data) => {
     const sMail = 'style="color: blue; font-weight: bold;"';
     const sFh = 'style="color: brown; font-weight: normal;"';
     const sMsg = 'style="color: green; font-weight: normal; font-style: italic"';
-    console.log(data)
     data.map( m => {
         html += `<tr>
                     <td>${m.us}</td>
@@ -29,7 +28,6 @@ socket.on('mensajeBack', (data) => {
     })
     html += '</table>'
     msgs.innerHTML = html;
-    let f = new Date().toLocaleTimeString
 });
 
 socket.on('envioProds', (data) => {
@@ -40,15 +38,30 @@ socket.on('envioProds', (data) => {
         prods.map( p => 
             html +=`
                 <tr>
-                    <td class="nombreProd">${p.title}</td>
-                    <td class="prProd">${p.price}</td>
-                    <td><img alt="Foto" style="width: 100px;" src=${p.thumbnail}></td>
+                    <td class="nombreProd"><input type="text" id="title${p.id}" value="${p.title}"></td>
+                    <td class="prProd"><input type="number" id="price${p.id}" value="${p.price}"></td>
+                    <td><img alt="Foto" style="width: 100px;" src=${p.thumbnail}><span id="foto${p.id}" style="display: none;">${p.thumbnail}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" onclick="modificarProd(${p.id})"><i class="bi bi-pencil-square"></i> Modificar</button>
+                        <button class="btn btn-sm btn-danger" onclick="eliminarProd(${p.id})"><i class="bi bi-trash3"></i> Eliminar</button>
+                    </td>
                 </tr>
             `
         );            
         detalle.innerHTML = html;
     }
 });
+
+const eliminarProd = (id) => {    
+    socket.emit('eliminarProd', {id: id});
+}
+
+const modificarProd = (id) => {    
+    const title = document.getElementById(`title${id}`);
+    const price = document.getElementById(`price${id}`);
+    const foto = document.getElementById(`foto${id}`);
+    socket.emit('modificarProd', {id: id, title: title.value, price: price.value, thumbnail: foto.innerText});
+}
 
 const enviar = () => {
     const usuario = document.getElementById('usuario');    
@@ -62,6 +75,7 @@ const enviar = () => {
         mensaje.value = ''; 
     }
 }
+
 socket.emit('pedirProds');
 
 const formatoFecha = (fh) => {
